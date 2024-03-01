@@ -1,0 +1,1 @@
+/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/party.dir/party.c.o CMakeFiles/party.dir/flv.c.o  -o party  ../libcaption.a 

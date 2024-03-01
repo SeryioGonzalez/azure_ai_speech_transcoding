@@ -51,12 +51,21 @@ class WavInputStreamReaderCallback(speech_sdk.audio.PullAudioInputStreamCallback
         self._file_h.close()
         self._stream.close()
 
+<<<<<<< HEAD
+=======
+    speech_config = speech_sdk.SpeechConfig(speech_key, speech_region, speech_recognition_language=speech_language)
+
+>>>>>>> main
 def print_srt(srt_sequence, start_time, end_time, srt_text):
     print(srt_sequence)
     print(f"{start_time} --> {end_time}")
     print(srt_text)
     print("")
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> main
 
 def speech_recognition_with_pull_stream(log_file=None):
     wave_callback = WavInputStreamReaderCallback()
@@ -64,12 +73,18 @@ def speech_recognition_with_pull_stream(log_file=None):
     wave_stream = speech_sdk.audio.PullAudioInputStream(wave_callback, wave_format)
     
     audio_config = speech_sdk.audio.AudioConfig(stream=wave_stream)
-    
     speech_config = speech_sdk.SpeechConfig(speech_key, speech_region, speech_recognition_language=speech_language)
 
     speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_StablePartialResultThreshold, value="5")
+<<<<<<< HEAD
     speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_PostProcessingOption, value="TrueText")
 
+=======
+    speech_config.output_format = speech_sdk.OutputFormat.Detailed
+ 
+    speech_config.request_word_level_timestamps()
+    
+>>>>>>> main
     if log_file is not None:
         speech_config.enable_audio_logging()
         speech_config.set_property(speech_sdk.PropertyId.Speech_LogFilename, log_file)
@@ -82,7 +97,11 @@ def speech_recognition_with_pull_stream(log_file=None):
         nonlocal done
         done = True
 
+<<<<<<< HEAD
     srt_sequence = 1
+=======
+    srt_sequence = 0
+>>>>>>> main
     def generate_srt(evt: speech_sdk.SessionEventArgs):
         start_time = helper.timestamp_from_ticks(evt.result.offset)
         end_time   = helper.timestamp_from_ticks(evt.result.offset + evt.result.duration)
