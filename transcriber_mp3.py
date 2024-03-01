@@ -23,6 +23,7 @@ class BinaryFileReaderCallback(speech_sdk.audio.PullAudioInputStreamCallback):
         self._file_h = open(filename, "rb")
 
     def read(self, buffer: memoryview) -> int:
+
         try:
             size = buffer.nbytes
             frames = self._file_h.read(size)
@@ -61,6 +62,7 @@ def file_stream_helper(mp3_file_path):
         print('CLOSING on {}'.format(evt.result.reason))
         nonlocal done
         done = True
+    print("Configuring call backs")
 
     # Connect callbacks to the events fired by the speech recognizer
     speech_recognizer.recognizing.connect(lambda evt: print('RECOGNIZING: {}'.format(evt.result.text)))

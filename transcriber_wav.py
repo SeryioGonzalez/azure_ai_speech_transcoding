@@ -18,14 +18,16 @@ if speech_language == "":
     sys.exit(1)
 
 def file_stream_helper(wav_file_path):
-    
+    print("Starting")
     # Configure speech service
     speech_config = speech_sdk.SpeechConfig(speech_key, speech_region, speech_recognition_language=speech_language)
     audio_config = speech_sdk.audio.AudioConfig(filename=wav_file_path)
-
     speech_recognizer = speech_sdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
 
+    print("Retrieving result ")
     result = speech_recognizer.recognize_once_async().get()
+
+    print("Configuring event callbacks")
 
     if result.reason == speech_sdk.ResultReason.RecognizedSpeech:
         print("Recognized: {}".format(result.text))
@@ -38,6 +40,7 @@ def file_stream_helper(wav_file_path):
             print("Error details: {}".format(cancellation_details.error_details))
             print("Did you set the speech resource key and region values?")
 
+    print("Awaiting result")
 
     print(result.text)
 
