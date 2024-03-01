@@ -20,9 +20,9 @@ then
     rm $output_file
 fi
 set -e
-#echo "Streaming content"
+echo "Streaming content"
 #ffmpeg -loglevel quiet -re -sn -i $input_stream -c:v copy -c:a copy -f flv - | flv+srt - $fifo_name - | ffmpeg -loglevel quiet -y -i - -c:v copy -c:a copy -metadata:s:s:0 language=eng -f $output_format $output_file &
 #ffmpeg -loglevel quiet -re -i $input_stream -vn -ac 1 -c: pcm_s16le -ar 16000 -f wav - | python transcriber_wav_rt.py > $fifo_name
 
 echo "Reading subtitles"
-ffmpeg -loglevel quiet -re -i $input_stream -vn -ac 1 -c: pcm_s16le -ar 16000 -f wav - | python transcriber_wav_rt.py 
+ffmpeg -loglevel quiet -re -i $input_stream -vn -ac 1 -c: pcm_s16le -ar 16000 -f wav - | python transcriber_wav_rt.py  > out.srt

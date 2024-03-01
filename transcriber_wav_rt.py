@@ -95,7 +95,9 @@ def speech_recognition_with_pull_stream(log_file=None):
 
     # Connect callbacks to the events fired by the speech recognizer
     speech_recognizer.recognizing.connect(generate_srt)
-        
+    speech_recognizer.session_stopped.connect(stop_cb)
+    speech_recognizer.canceled.connect(stop_cb)
+
     # Start continuous speech recognition
     speech_recognizer.start_continuous_recognition()
 
