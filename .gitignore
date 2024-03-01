@@ -1,10 +1,13 @@
-media/*
 .env
 logger.log
 __pycache__/*
+<<<<<<< HEAD
+media/*
+=======
 myfifo.fifo
 libcaption/CMakeCache.txt
 libcaption/CMakeFiles
 libcaption/Makefile
 libcaption/cmake_install.cmake
 libcaption/libcaption.a
+>>>>>>> main
