@@ -51,34 +51,14 @@ class WavInputStreamReaderCallback(speech_sdk.audio.PullAudioInputStreamCallback
         self._file_h.close()
         self._stream.close()
 
-    speech_config = speech_sdk.SpeechConfig(speech_key, speech_region, speech_recognition_language=speech_language)
-
-
-def get_timestamp(start : time, end : time) -> str :
-    time_format = "%H:%M:%S.%f"
-    # Truncate microseconds to milliseconds.
-    return "{} --> {}".format(start.strftime(time_format)[:-3], end.strftime(time_format)[:-3])
-
-def caption_from_real_time_result(result):
-    start_time = helper.time_from_ticks(result.offset)
-    end_time = helper.time_from_ticks(result.offset + result.duration)
-
-    timestamp = get_timestamp(start_time, end_time)
-
-    print(f"Recognized {timestamp}")
-
-
-def generate_srt(evt: speech_sdk.SessionEventArgs):
-    #start_time = helper.time_from_ticks(evt.result.offset)
-    #start_time = evt.result.offset
-    #end_time = helper.time_from_ticks(result.offset + result.duration)
-
-    #caption_from_real_time_result(evt.result)
-    #print(f"Text {evt.result.text} in offset {evt.result.offset}")
-    print(f"offset {evt.result.duration}")
+def print_srt(srt_sequence, start_time, end_time, srt_text):
+    print(srt_sequence)
+    print(f"{start_time} --> {end_time}")
+    print(srt_text)
+    print("")
     
 
-def speech_recognition_with_pull_stream():
+def speech_recognition_with_pull_stream(log_file=None):
     wave_callback = WavInputStreamReaderCallback()
     wave_format = speech_sdk.audio.AudioStreamFormat(samples_per_second=wave_callback.get_frame_rate(), bits_per_sample=wave_callback.get_bits_per_sample(), channels=wave_callback.get_num_channels())
     wave_stream = speech_sdk.audio.PullAudioInputStream(wave_callback, wave_format)
@@ -89,8 +69,10 @@ def speech_recognition_with_pull_stream():
 
     speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_StablePartialResultThreshold, value="5")
     speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_PostProcessingOption, value="TrueText")
-    #speech_config.enable_audio_logging()
-    #speech_config.set_property(speech_sdk.PropertyId.Speech_LogFilename, "logger.log")
+
+    if log_file is not None:
+        speech_config.enable_audio_logging()
+        speech_config.set_property(speech_sdk.PropertyId.Speech_LogFilename, log_file)
 
     speech_recognizer = speech_sdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
     
@@ -99,6 +81,18 @@ def speech_recognition_with_pull_stream():
         """callback that signals to stop continuous recognition upon receiving an event `evt`"""
         nonlocal done
         done = True
+
+    srt_sequence = 1
+    def generate_srt(evt: speech_sdk.SessionEventArgs):
+        start_time = helper.timestamp_from_ticks(evt.result.offset)
+        end_time   = helper.timestamp_from_ticks(evt.result.offset + evt.result.duration)
+        srt_text   = evt.result.text
+
+        nonlocal srt_sequence
+
+        print_srt(srt_sequence, start_time, end_time, srt_text)
+        
+        srt_sequence += 1
 
     # Connect callbacks to the events fired by the speech recognizer
     speech_recognizer.recognizing.connect(generate_srt)
