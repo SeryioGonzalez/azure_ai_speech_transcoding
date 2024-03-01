@@ -1,0 +1,1 @@
+/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/scc2vtt.dir/scc2vtt.c.o  -o scc2vtt  ../libcaption.a 

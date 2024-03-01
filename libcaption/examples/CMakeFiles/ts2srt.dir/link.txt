@@ -1,0 +1,1 @@
+/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/ts2srt.dir/ts2srt.c.o CMakeFiles/ts2srt.dir/ts.c.o  -o ts2srt  ../libcaption.a 

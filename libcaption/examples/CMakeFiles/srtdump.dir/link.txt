@@ -1,0 +1,1 @@
+/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/srtdump.dir/srtdump.c.o  -o srtdump  ../libcaption.a 
