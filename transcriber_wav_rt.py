@@ -6,6 +6,8 @@ import wave
 import io
 
 import azure.cognitiveservices.speech as speech_sdk
+import helper
+
 
 load_dotenv()
 speech_key      = os.environ['speech_key']
@@ -53,18 +55,28 @@ class WavInputStreamReaderCallback(speech_sdk.audio.PullAudioInputStreamCallback
 
 
 def get_timestamp(start : time, end : time) -> str :
-    time_format = ""
-    if self._user_config["use_sub_rip_text_caption_format"] :
-        # SRT format requires ',' as decimal separator rather than '.'.
-        time_format = "%H:%M:%S,%f"
-    else :
-        time_format = "%H:%M:%S.%f"
+    time_format = "%H:%M:%S.%f"
     # Truncate microseconds to milliseconds.
     return "{} --> {}".format(start.strftime(time_format)[:-3], end.strftime(time_format)[:-3])
 
-def generate_srt(evt: speech_sdk.SessionEventArgs):
-    print(evt.result.text)
+def caption_from_real_time_result(result):
+    start_time = helper.time_from_ticks(result.offset)
+    end_time = helper.time_from_ticks(result.offset + result.duration)
 
+    timestamp = get_timestamp(start_time, end_time)
+
+    print(f"Recognized {timestamp}")
+
+
+def generate_srt(evt: speech_sdk.SessionEventArgs):
+    #start_time = helper.time_from_ticks(evt.result.offset)
+    #start_time = evt.result.offset
+    #end_time = helper.time_from_ticks(result.offset + result.duration)
+
+    #caption_from_real_time_result(evt.result)
+    #print(f"Text {evt.result.text} in offset {evt.result.offset}")
+    print(f"offset {evt.result.duration}")
+    
 
 def speech_recognition_with_pull_stream():
     wave_callback = WavInputStreamReaderCallback()
@@ -74,7 +86,9 @@ def speech_recognition_with_pull_stream():
     audio_config = speech_sdk.audio.AudioConfig(stream=wave_stream)
     
     speech_config = speech_sdk.SpeechConfig(speech_key, speech_region, speech_recognition_language=speech_language)
+
     speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_StablePartialResultThreshold, value="5")
+    speech_config.set_property(property_id = speech_sdk.PropertyId.SpeechServiceResponse_PostProcessingOption, value="TrueText")
     #speech_config.enable_audio_logging()
     #speech_config.set_property(speech_sdk.PropertyId.Speech_LogFilename, "logger.log")
 

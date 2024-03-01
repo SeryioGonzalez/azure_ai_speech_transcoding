@@ -1,4 +1,4 @@
-# Azure Speec to Text Transcoding
+# Azure Speech to Text Transcoding
 
 There are 3 scripts, each intended for transcoding mp3 and wav audios and the audio from mp4 videos.
 You need to install ffmpeg for mp4 transcoding.
