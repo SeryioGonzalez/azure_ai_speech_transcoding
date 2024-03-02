@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/flv2srt.dir/flv2srt.c.o CMakeFiles/flv2srt.dir/flv.c.o  -o flv2srt  ../libcaption.a 

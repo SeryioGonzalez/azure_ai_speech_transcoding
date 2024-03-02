@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/vttdump.dir/vttdump.c.o  -o vttdump  ../libcaption.a 

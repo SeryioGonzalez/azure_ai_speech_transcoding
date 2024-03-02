@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/rollup.dir/rollup.c.o CMakeFiles/rollup.dir/flv.c.o  -o rollup  ../libcaption.a 

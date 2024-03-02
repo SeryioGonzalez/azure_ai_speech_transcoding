@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/vttsegmenter.dir/vttsegmenter.c.o  -o vttsegmenter  ../libcaption.a 

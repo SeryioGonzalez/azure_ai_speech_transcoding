@@ -1,1 +1,0 @@
-/usr/bin/cc -Wall -O3  -g  -rdynamic CMakeFiles/sccdump.dir/sccdump.c.o CMakeFiles/sccdump.dir/flv.c.o  -o sccdump  ../libcaption.a 
