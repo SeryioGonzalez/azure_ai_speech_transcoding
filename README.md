@@ -1,4 +1,4 @@
-# Azure Speech to Text Transcoding
+# Azure Speech to Text Transcription
 
 This repo shows how to implement a real time transcription using [Azure AI Speech service](https://azure.microsoft.com/en-us/products/ai-services/ai-speech).
 We will be using the Python SDK. 4 different scripts have been implemented making use of a common helper module.
