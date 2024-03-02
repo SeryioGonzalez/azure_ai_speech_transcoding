@@ -1,0 +1,4 @@
+media/*
+.env
+logger.log
+__pycache__/

@@ -7,8 +7,5 @@ sudo apt-get install cmake -y
 
 pip install -r requirements.txt
 
-mkdir media
-
-cd libcaption 
-cmake . && make
-sudo make install
+source config.sh
+mkdir $media_folder
